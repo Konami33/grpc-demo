@@ -1,0 +1,41 @@
+//This line specifies that the code is written in Protocol Buffers version 3 syntax.
+syntax="proto3";
+
+//path to current folder where the generated files will be placed
+option go_package = "./proto";
+
+//package name for protofile
+package greet_service;
+
+//defining all the services for gRPC
+service GreetService {
+    //simple rpc
+    rpc SayHello(NoParam) returns (HelloResponse);
+
+    //server strearming RPC
+    rpc SayHelloServerStreaming(NameList) returns (stream HelloResponse);
+
+    //client streaming RPC
+    rpc SayHelloClientStreaming(stream HelloRequest) returns (MessageList);
+
+    //bidirectional streaming rpc
+    rpc SayHelloBidirectionalStreaming(stream HelloRequest) returns (stream HelloResponse);
+}
+
+message NoParam {};
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloResponse {
+    string message = 1;
+}
+
+message NameList {
+    repeated string names = 1;
+}
+
+message MessageList {
+    repeated string names = 1;
+}
